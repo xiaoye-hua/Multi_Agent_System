@@ -10,7 +10,7 @@ import pandas as pd
 
 house_num = 1000
 similation_number = 10000
-visited_threshold = 5000
+visited_threshold = 370
 preference_threshold = 0.8
 
 final_preference_lst = []
