@@ -13,6 +13,8 @@ View more on my tutorial page: https://morvanzhou.github.io/tutorials/
 """
 
 from maze_env import Maze
+import matplotlib.pylab as plt
+
 from RL_brain import QLearningTable,SarsaTable
 import logging
 logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s',
@@ -21,17 +23,23 @@ logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(leve
                     level=logging.DEBUG)
 logger = logging.getLogger()
 
+
+MAX_STEPS = 200
+final_reward_lst = []
+slidding_reward_lst = []
 def update():
-    for episode in range(100):
+    for episode in range(1000):
         # initial observation
         observation = env.reset()
-        print('episode',episode)
+        # print('episode',episode)
         R = []
         A = []
+        step = 0
+        slidding_reward = -100
         while True:
             # fresh env
             env.render()
-
+            step += 1
             # RL choose action based on observation
             action = RL.choose_action(str(observation))
 
@@ -45,11 +53,22 @@ def update():
             observation = observation_
             R.append(reward)
             A.append(action)
+            total_reward = sum(R)
 
             # break while loop when end of this episode
+            if done or step>MAX_STEPS:
+                print(R)
+                slidding_reward = slidding_reward * 0.99 + total_reward * 0.01
+                print(f"Episode: {episode}; total steps: {step}; final reward: {reward}; total reward: {total_reward}; slidding reward: {slidding_reward}")
+                final_reward_lst.append(total_reward)
+                slidding_reward_lst.append(slidding_reward)
+
             if done:
                 break
-        print(RL.q_table)
+            if step>MAX_STEPS:
+                break
+
+        # print(RL.q_table)
     #     logger.info("R")
     #     logger.info(R)
     #     logger.info("A")
@@ -60,6 +79,9 @@ def update():
     # end of game
     print('game over')
     env.destroy()
+    plt.plot(final_reward_lst)
+    plt.plot(slidding_reward_lst)
+    plt.show()
 
 if __name__ == "__main__":
     env = Maze()
