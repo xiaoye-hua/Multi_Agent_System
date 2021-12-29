@@ -68,14 +68,6 @@ def update():
             if step>MAX_STEPS:
                 break
 
-        # print(RL.q_table)
-    #     logger.info("R")
-    #     logger.info(R)
-    #     logger.info("A")
-    #     logger.info(A)
-    #     logger.info(RL.q_table)
-    # RL.q_table.to_csv('q_learning_table.csv')
-
     # end of game
     print('game over')
     env.destroy()

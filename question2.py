@@ -7,10 +7,9 @@ from mctspy.tree.nodes import OnePlayersGameMonteCarloTreeSearchNode
 # Config
 epoch = 10 # 同一个target_address, 实验epoch次，然后取平均
 tree_depth = 12
-c_param = 1
-mcts_iteration_num = 100
-# ???
-snowcap_iteration_num = 5
+c_param = 0.1
+mcts_iteration_num = 50
+snowcap_iteration_num = 1
 
 def generate_target_address(depth: int):
     lst = ["L", "R"]

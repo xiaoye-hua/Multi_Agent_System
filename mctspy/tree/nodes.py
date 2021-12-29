@@ -1,5 +1,4 @@
 import numpy as np
-from collections import defaultdict
 from abc import ABC, abstractmethod
 
 
@@ -15,44 +14,6 @@ class MonteCarloTreeSearchNode(ABC):
         self.state = state
         self.parent = parent
         self.children = []
-
-    @property
-    @abstractmethod
-    def untried_actions(self):
-        """
-
-        Returns
-        -------
-        list of mctspy.games.common.AbstractGameAction
-
-        """
-        pass
-
-    @property
-    @abstractmethod
-    def q(self):
-        pass
-
-    @property
-    @abstractmethod
-    def n(self):
-        pass
-
-    @abstractmethod
-    def expand(self):
-        pass
-
-    @abstractmethod
-    def is_terminal_node(self):
-        pass
-
-    @abstractmethod
-    def rollout(self):
-        pass
-
-    @abstractmethod
-    def backpropagate(self, reward):
-        pass
 
     def is_fully_expanded(self):
         return len(self.untried_actions) == 0
@@ -85,9 +46,6 @@ class OnePlayersGameMonteCarloTreeSearchNode(MonteCarloTreeSearchNode):
 
     @property
     def q(self):
-        # wins = self._results[self.parent.state.next_to_move]
-        # loses = self._results[-1 * self.parent.state.next_to_move]
-        # return wins - loses
         return self._results
 
     @property
