@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# @File    : question2.py
-# @Author  : Hua Guo
-# @Disc    :
 import numpy as np
 import pandas as pd
 from mctspy.games.assignment.assignment import AssignmentGameState, AssignmentMove
@@ -10,8 +6,8 @@ from mctspy.tree.nodes import OnePlayersGameMonteCarloTreeSearchNode
 
 # Config
 epoch = 10 # 同一个target_address, 实验epoch次，然后取平均
-tree_depth = 50
-c_param = 50
+tree_depth = 12
+c_param = 1
 mcts_iteration_num = 100
 # ???
 snowcap_iteration_num = 5
