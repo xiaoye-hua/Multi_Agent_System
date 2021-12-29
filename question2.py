@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# @File    : assignment_main.py
+# @File    : question2.py
 # @Author  : Hua Guo
 # @Disc    :
 import numpy as np

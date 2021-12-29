@@ -75,3 +75,28 @@ max        4.0     5.000000
 mean       1.9     2.920186
 min        0.0     0.944378
 max        5.0     5.000000
+
+
+# Question 1
+
+similation num: 10000; visited house: 0; pereference threshold: 0.5
+                       max      mean       min
+final_preference  0.999997  0.748692  0.500046
+
+similation num: 10000; visited house: 0; pereference threshold: 0.8
+                      max      mean      min
+final_preference  0.99999  0.900533  0.80006
+
+similation num: 10000; visited house: 0; pereference threshold: 0.9
+                       max      mean       min
+final_preference  0.999992  0.950007  0.900023
+
+
+
+similation num: 10000; visited house: 3000; pereference threshold: 0.5
+                       max      mean       min
+final_preference  0.999722  0.496555  0.000009
+
+similation num: 10000; visited house: 5000; pereference threshold: 0.8
+                      max      mean       min
+final_preference  0.99999  0.501124  0.000015
