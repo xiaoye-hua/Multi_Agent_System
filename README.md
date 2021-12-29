@@ -17,3 +17,9 @@ Strategy
     1. n1=1/3 of total house num, n2=0.5
     2. n1=1/2 of total house num, n2=0.8
     
+    
+# Question 3
+
+TODO
+1. 
+    
