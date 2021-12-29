@@ -1,4 +1,6 @@
 import time
+
+
 class MonteCarloTreeSearch(object):
 
     def __init__(self, node):
@@ -34,12 +36,14 @@ class MonteCarloTreeSearch(object):
                 reward = v.rollout()
                 v.backpropagate(reward)
         else :
-            for _ in range(0, simulations_number):            
+            for _ in range(0, simulations_number):
                 v = self._tree_policy()
                 reward = v.rollout()
                 v.backpropagate(reward)
         # to select best child go for exploitation only
-        return self.root.best_child(c_param=0.)
+        return self.root.best_child(
+            c_param=0.
+        )
 
     def _tree_policy(self):
         """
