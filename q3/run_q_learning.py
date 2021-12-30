@@ -14,6 +14,8 @@ View more on my tutorial page: https://morvanzhou.github.io/tutorials/
 
 from maze_env import Maze
 import matplotlib.pylab as plt
+import pandas as pd
+import os
 
 from RL_brain import QLearningTable,SarsaTable
 import logging
@@ -23,19 +25,25 @@ logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(leve
                     level=logging.DEBUG)
 logger = logging.getLogger()
 
-
+# config
 MAX_STEPS = 200
+total_episodes = 600
+save_episodes_interval = 100
+output_dir = '../result/q_learning'
+reward_file = 'reward.csv'
+
+
 final_reward_lst = []
 slidding_reward_lst = []
 def update():
-    for episode in range(1000):
+    for episode in range(total_episodes):
         # initial observation
         observation = env.reset()
         # print('episode',episode)
         R = []
         A = []
         step = 0
-        slidding_reward = -100
+        # slidding_reward =
         while True:
             # fresh env
             env.render()
@@ -58,22 +66,26 @@ def update():
             # break while loop when end of this episode
             if done or step>MAX_STEPS:
                 print(R)
-                slidding_reward = slidding_reward * 0.99 + total_reward * 0.01
-                print(f"Episode: {episode}; total steps: {step}; final reward: {reward}; total reward: {total_reward}; slidding reward: {slidding_reward}")
+                # slidding_reward = slidding_reward * 0.99 + total_reward * 0.01
+                print(f"Episode: {episode}; total steps: {step}; final reward: {reward}; total reward: {total_reward};"
+                      # f" slidding reward: {slidding_reward}"
+                      )
                 final_reward_lst.append(total_reward)
-                slidding_reward_lst.append(slidding_reward)
+                # slidding_reward_lst.append(slidding_reward)
 
             if done:
                 break
             if step>MAX_STEPS:
                 break
-
     # end of game
     print('game over')
     env.destroy()
     plt.plot(final_reward_lst)
-    plt.plot(slidding_reward_lst)
+    # plt.plot(slidding_reward_lst)
     plt.show()
+    plt.savefig(os.path.join(output_dir, 'total_reward.png'))
+    reward_df = pd.DataFrame({'total_reward': final_reward_lst})
+    reward_df.to_csv(os.path.join(output_dir, reward_file))
 
 if __name__ == "__main__":
     env = Maze()

@@ -13,5 +13,6 @@ build/
 dist/
 mctspy.egg-info/
 .idea
+hw_6/*.log
 
 !.gitkeep
