@@ -20,6 +20,6 @@ Strategy
     
 # Question 3
 
-TODO
-1. 
-    
+1. [mc result](../result/mc_multi_threads/)
+2. [Q learning result](../result/q_learning)
+3. [sarsa result](../result/sarsa)

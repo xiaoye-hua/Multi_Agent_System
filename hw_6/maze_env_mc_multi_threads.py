@@ -120,13 +120,13 @@ logger = logging.getLogger()
 def simulation():
     R = [-1]
     A = []
-    max_teps = 200
+    max_teps = 10000
     env = Maze()
     step = 0
     np.random.seed()
     state_lst = [[0, 0]]
     while True:
-        env.render()
+        # env.render()
         step += 1
         a = np.random.choice([0, 1, 2, 3])
         s, r, done = env.step(a)
@@ -154,8 +154,8 @@ def simulation():
         i, j = state
         total_reward += reward
         if state not in state_lst[:idx]:
-            reward_table[i][j] += total_reward
-            time_table[i][j] += 1
+            reward_table[j][i] += total_reward
+            time_table[j][i] += 1
 
     # # return sum(R), step
     # return state_lst, R
@@ -167,7 +167,7 @@ def update(multi=False):
     # config
     debug = False
     output_dir = '../logs/mc_multi_threads'
-    similation_num = 1000
+    similation_num = 10000
     if debug:
         similation_num = 3
     # s_table = np.zeros((9,9))
@@ -240,6 +240,8 @@ def update(multi=False):
     # plt.show()
     print('Saving data..')
     pd.DataFrame(s_table).to_csv(os.path.join(output_dir, 'mc_result.csv'))
+    pd.DataFrame(total_reward).to_csv(os.path.join(output_dir, 'total_reward.csv'))
+    pd.DataFrame(total_time).to_csv(os.path.join(output_dir, 'first_visited_time.csv'))
 
 
 if __name__ == '__main__':
