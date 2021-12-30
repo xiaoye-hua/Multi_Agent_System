@@ -12,7 +12,12 @@ View more on my tutorial page: https://morvanzhou.github.io/tutorials/
 """
 import numpy as np
 import time
+import os
+import pandas as pd
+import seaborn as sns
+import matplotlib.pylab as plt
 import sys
+from tqdm import tqdm
 from copy import deepcopy
 if sys.version_info.major == 2:
     import Tkinter as tk
@@ -107,30 +112,67 @@ class Maze(tk.Tk, object):
 
 
 def update():
+    # config
+    debug = False
+    output_dir = '../logs/mc'
+    similation_num = 10
+    if debug:
+        dim = 2
+        similation_num = 1
+    else:
+        dim = 9
+    max_teps = 200
     s_table = np.zeros((9,9))
-    for i in range(9):
-        for j in range(9):
+    for i in tqdm(range(dim)):
+        for j in range(dim):
             if [i,j] in env.wall:
                 continue
-            for t in range(30):
+            total_rewards_lst = []
+            total_steps_lst = []
+            for t in tqdm(range(similation_num)):
                 R = []
                 A = []
                 s = env.reset()
+                step = 0
                 while True:
                     env.render()
+                    step += 1
                     a = np.random.choice([0, 1, 2, 3])
                     s, r, done = env.step(a)
                     R.append(r)
                     A.append(a)
-                    print(env.rect)
-                    if done:
+                    # print(env.rect)
+                    if done or step>max_teps:
                         break
-                logger.info("R")
-                logger.info(R)
-                logger.info("A")
-                logger.info(A)
-            s_table[i][j] = s_table[i][j] + 1/(t+1)*(sum(R)-s_table[i][j])
-            logger.info(s_table)
+                # logger.info("R")
+                # logger.info(R)
+                # logger.info("A")
+                # logger.info(A)
+                total_rewards_lst.append(sum(R))
+                total_steps_lst.append(step)
+            # s_table[i][j] = s_table[i][j] + 1/(t+1)*(sum(R)-s_table[i][j])
+            print(f"Position: [{i}, {j}]; simulation num: {similation_num}")
+            print(f"    Reward statistic:"
+                  f" mean:{np.mean(total_rewards_lst)}; max: {np.max(total_rewards_lst)}; min: {np.min(total_rewards_lst)}")
+            s_table[i][j] = np.mean(total_rewards_lst)
+            print(f"    Step statistic:"
+                  f" mean:{np.mean(total_steps_lst)}; max: {np.max(total_steps_lst)}; min: {np.min(total_steps_lst)}")
+            s_table[i][j] = np.mean(total_rewards_lst)
+            plt.figure()
+            sns.heatmap(s_table)
+            print('Saving image...')
+            plt.savefig(os.path.join(output_dir, f'heatmap_{i}_{j}.png'))
+            # logger.info(s_table)
+    plt.figure()
+    sns.heatmap(s_table)
+    print('Saving image...')
+    plt.savefig(os.path.join(output_dir, 'heatmap.png'))
+    # plt.show()
+    print('Saving data..')
+    pd.DataFrame(s_table).to_csv(os.path.join(output_dir, 'mc_result.csv'))
+
+
+
 
 if __name__ == '__main__':
     env = Maze()

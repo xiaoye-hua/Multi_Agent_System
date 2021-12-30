@@ -64,4 +64,6 @@ final_preference  1.0  0.796998  0.000244
 # Question 3
 
 
-    
+1. [mc result](../result/mc_multi_threads/)
+2. [Q learning result](../result/q_learning)
+3. [sarsa result](../result/sarsa)
