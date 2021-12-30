@@ -21,9 +21,9 @@ from RL_brain import QLearningTable,SarsaTable
 def update():
     # config
     MAX_STEPS = 200
-    total_episodes = 200
+    total_episodes = 600
     save_episodes_interval = 100
-    output_dir = '../logs/sarsa'
+    output_dir = '../result/sarsa'
     reward_file = 'reward.csv'
 
     final_reward_lst = []

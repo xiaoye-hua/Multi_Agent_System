@@ -29,7 +29,7 @@ logger = logging.getLogger()
 MAX_STEPS = 200
 total_episodes = 600
 save_episodes_interval = 100
-output_dir = '../logs/q_learning'
+output_dir = '../result/q_learning'
 reward_file = 'reward.csv'
 
 
