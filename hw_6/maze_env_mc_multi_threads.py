@@ -118,83 +118,121 @@ logger = logging.getLogger()
 #         self.update()
 
 def simulation():
-    R = []
+    R = [-1]
     A = []
     max_teps = 200
     env = Maze()
     step = 0
     np.random.seed()
+    state_lst = [[0, 0]]
     while True:
-        # env.render()
+        env.render()
         step += 1
         a = np.random.choice([0, 1, 2, 3])
         s, r, done = env.step(a)
+        # print(f"state: {state}")
+        # print(state_lst)
+        # print(R)
+        # print()
         R.append(r)
-        A.append(a)
+        if r == -50:
+            state_lst.append([5, 6])
+        elif r == 50:
+            state_lst.append([8, 8])
+        else:
+            state = [int(s[-2] / 40 - 1), int(s[-1] / 40 - 1)]
+            state_lst.append(state)
         if done or step > max_teps:
             break
     env.destroy()
-    return sum(R), step
+    time_table = np.zeros((9, 9))
+    reward_table = np.zeros((9, 9))
+    total_reward = 0
+    for idx in range(len(R)-1, -1, -1):
+        reward = R[idx]
+        state = state_lst[idx]
+        i, j = state
+        total_reward += reward
+        if state not in state_lst[:idx]:
+            reward_table[i][j] += total_reward
+            time_table[i][j] += 1
+
+    # # return sum(R), step
+    # return state_lst, R
+    return reward_table, time_table
     # total_rewards_lst.append(sum(R))
     # total_steps_lst.append(step)
 
 def update(multi=False):
     # config
-    debug = True
+    debug = False
     output_dir = '../logs/mc_multi_threads'
-    similation_num = 30
+    similation_num = 1000
     if debug:
-        dim = 4
-        similation_num = 30
-    else:
-        dim = 9
-    s_table = np.zeros((9,9))
+        similation_num = 3
+    # s_table = np.zeros((9,9))
+    total_reward = np.zeros((9, 9))
+    total_time = np.zeros((9, 9))
     basic_env = Maze()
-    for i in tqdm(range(dim)):
-        for j in range(dim):
-            if [i,j] in basic_env.wall:
-                continue
-            total_rewards_lst = []
-            total_steps_lst = []
-            if multi:
-                with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
-                    futures = [executor.submit(simulation) for _ in range(similation_num)]
-                    for future in concurrent.futures.as_completed(futures):
-                        # print(future.result())
-                        R, step = future.result()
-                        total_rewards_lst.append(R)
-                        total_steps_lst.append(step)
-            else:
-                for t in tqdm(range(similation_num)):
-                    # R = []
-                    # A = []
-                    # # s = env.reset()
-                    # env = Maze()
-                    # step = 0
-                    # while True:
-                    #     step += 1
-                    #     a = np.random.choice([0, 1, 2, 3])
-                    #     s, r, done = env.step(a)
-                    #     R.append(r)
-                    #     A.append(a)
-                    #     if done or step>max_teps:
-                    #         break
+    # for i in tqdm(range(dim)):
+    #     for j in range(dim):
+    #         if [i,j] in basic_env.wall:
+    #             continue
+    total_rewards_lst = []
+    total_steps_lst = []
+    if multi:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
+            futures = [executor.submit(simulation) for _ in range(similation_num)]
+            for future in concurrent.futures.as_completed(futures):
+                # print(future.result())
+                # reward, time = future.result()
+                reward_table, time_table = future.result()
+                total_reward += reward_table
+                total_time += time_table
 
-                    R, step = simulation()
-                    total_rewards_lst.append(R)
-                    total_steps_lst.append(step)
-            print(f"Position: [{i}, {j}]; simulation num: {similation_num}")
-            print(f"    Reward statistic:"
-                  f" mean:{np.mean(total_rewards_lst)}; max: {np.max(total_rewards_lst)}; min: {np.min(total_rewards_lst)}")
-            s_table[i][j] = np.mean(total_rewards_lst)
-            print(f"    Step statistic:"
-                  f" mean:{np.mean(total_steps_lst)}; max: {np.max(total_steps_lst)}; min: {np.min(total_steps_lst)}")
-            s_table[i][j] = np.mean(total_rewards_lst)
-            plt.figure()
-            sns.heatmap(s_table)
-            print('Saving image...')
-            plt.savefig(os.path.join(output_dir, f'heatmap_{i}_{j}.png'))
-            # logger.info(s_table)
+
+                # total_rewards_lst.append(R)
+                # total_steps_lst.append(step)
+    else:
+        for t in tqdm(range(similation_num)):
+            reward_table, time_table = simulation()
+            total_reward += reward_table
+            total_time += time_table
+
+            # R = []
+            # A = []
+            # # s = env.reset()
+            # env = Maze()
+            # step = 0
+            # while True:
+            #     step += 1
+            #     a = np.random.choice([0, 1, 2, 3])
+            #     s, r, done = env.step(a)
+            #     R.append(r)
+            #     A.append(a)
+            #     if done or step>max_teps:
+            #         break
+
+            # R, step = simulation()
+            # total_rewards_lst.append(R)
+            # total_steps_lst.append(step)
+
+    # print(f"Position: [{i}, {j}]; simulation num: {similation_num}")
+    # print(f"    Reward statistic:"
+    #       f" mean:{np.mean(total_rewards_lst)}; max: {np.max(total_rewards_lst)}; min: {np.min(total_rewards_lst)}")
+    # s_table[i][j] = np.mean(total_rewards_lst)
+    # print(f"    Step statistic:"
+    #       f" mean:{np.mean(total_steps_lst)}; max: {np.max(total_steps_lst)}; min: {np.min(total_steps_lst)}")
+    # s_table[i][j] = np.mean(total_rewards_lst)
+    print(total_reward)
+    print(total_time)
+    s_table = pd.DataFrame(total_reward/total_time)
+    s_table = s_table.fillna(0)
+    # plt.figure()
+    # sns.heatmap(s_table)
+    # print('Saving image...')
+    # # plt.savefig(os.path.join(output_dir, f'heatmap_{i}_{j}.png'))
+    # # logger.info(s_table)
     plt.figure()
     sns.heatmap(s_table)
     print('Saving image...')
@@ -204,10 +242,8 @@ def update(multi=False):
     pd.DataFrame(s_table).to_csv(os.path.join(output_dir, 'mc_result.csv'))
 
 
-
-
 if __name__ == '__main__':
-    multi = True
+    multi = False
     import time
     begin = time.time()
     # env = Maze()
