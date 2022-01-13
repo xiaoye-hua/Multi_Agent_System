@@ -1,6 +1,6 @@
 *.py[cod]
 common/*.pyc
-main.py
+assignment_5/main.py
 mnist.py
 output/
 output_test/
@@ -14,5 +14,7 @@ dist/
 mctspy.egg-info/
 .idea
 hw_6/*.log
-
+assignment/*
+assignment_5/*
+.DS_Store
 !.gitkeep

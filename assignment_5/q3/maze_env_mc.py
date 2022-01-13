@@ -114,7 +114,7 @@ class Maze(tk.Tk, object):
 def update():
     # config
     debug = False
-    output_dir = '../logs/mc'
+    output_dir = '../../logs/mc'
     similation_num = 10
     if debug:
         dim = 2

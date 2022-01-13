@@ -1,7 +1,7 @@
 # Question 2
 
-1. Refer to [assignment_main.py](question2.py) for main code
-2. Refer to [log](log) for raw result
+1. Refer to [assignment_main.py](assignment_5/question2.py) for main code
+2. Refer to [log](assignment_5/log) for raw result
 
 
 # Question 1
@@ -64,6 +64,6 @@ final_preference  1.0  0.796998  0.000244
 # Question 3
 
 
-1. [mc result](../result/mc_multi_threads/)
-2. [Q learning result](../result/q_learning)
-3. [sarsa result](../result/sarsa)
+1. [mc result](assignment_5/result/mc_multi_threads/)
+2. [Q learning result](assignment_5/result/q_learning)
+3. [sarsa result](assignment_5/result/sarsa)

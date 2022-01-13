@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from mctspy.games.assignment.assignment import AssignmentGameState, AssignmentMove
-from mctspy.tree.search import MonteCarloTreeSearch
-from mctspy.tree.nodes import OnePlayersGameMonteCarloTreeSearchNode
+from assignment_5.mctspy.games import AssignmentGameState, AssignmentMove
+from assignment_5.mctspy.tree import MonteCarloTreeSearch
+from assignment_5.mctspy.tree.nodes import OnePlayersGameMonteCarloTreeSearchNode
 
 # Config
 epoch = 10 # 同一个target_address, 实验epoch次，然后取平均

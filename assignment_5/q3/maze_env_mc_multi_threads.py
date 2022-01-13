@@ -81,7 +81,7 @@ def simulation():
 def update(multi=False):
     # config
     debug = False
-    output_dir = '../logs/mc_multi_threads'
+    output_dir = '../../logs/mc_multi_threads'
     similation_num = 10000
     if debug:
         similation_num = 3
