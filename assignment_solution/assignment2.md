@@ -22,7 +22,7 @@ Bob	C	2, 2	-3, 3
 
 Based on IESDS, for Bob, C is the dominated strategy, so it can be eliminated. The same rule can be applied to Alice. So finally both of them will choose E.
 
-### Question 3 ??
+### Question 3 
 
 		Alice	
 		C	E
@@ -42,21 +42,18 @@ s=2			Alice
 		
 
 1. if 0<s<1, NE exists, EE
-2. if s=1 or s>1, NE doesn't exist, ??
+2. if s=1 or s>1, there is no pure NE. But there are mixed NE.
 
 ## 2.2
 
 ### Question 1
 
-		        Player1	
-		        H	              D
-Player2	H	0.5(v-c),0.5(v-c)	v, 0
-	D	0, v	0.5v,      0.5v
+		Player1	
+		H	D
+Player2	H	0.5v-c, 0.5v-c	v, 0
+        D	0, v	        0.5v, 0.5v
 
-### Question 2 ?? 
-
-1. if c<v, the NE is HH (single pure NE)
-2. if c=v, there is no NE ??
+### Question 2 
 
 
 ## 2.3 
@@ -65,7 +62,4 @@ Player2	H	0.5(v-c),0.5(v-c)	v, 0
 
 ![Result](img/assignment2_1.jpeg)
 
-## 2.4 ??
-
-### 
 

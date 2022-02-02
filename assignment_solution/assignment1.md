@@ -7,37 +7,10 @@
 There is no dominated strategy.
 
 
-### Question 2 ??
+### Question 2 
 
-Columns user:
+The final state is MC since it's the NE state of this game.
 
-U: 1, 2, 6 -> 1 
-
-M: 6, 1, -2 -> -2
-
-D: 9, 0, 2 -> 0
-
-Row user:
-
-L, C, R
-
--1, -2, -6
-
--6, -1, 2
-
--9, 0, -2
-
- |  |   |
-
--9, -2, -6
-
-Maxmin pay-off strategy:
-1. column user first: U,L,U,L
-2. row user first: C,U,CU
-
-### Question 3 ???
-
-change it to a game where there is NE.
 
 ## 1.2 Elimination of the dominated strategies
 
@@ -99,9 +72,6 @@ TODO: graph
 ### Question 3 
 
 b = 0.7
-
-### Question 4 ?? 
-
 
 
 
