@@ -14,7 +14,6 @@ dist/
 mctspy.egg-info/
 .idea
 hw_6/*.log
-assignment/*
 assignment_5/*
 .DS_Store
 !.gitkeep
