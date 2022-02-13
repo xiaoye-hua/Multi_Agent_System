@@ -18,3 +18,4 @@ assignment/*
 assignment_5/*
 .DS_Store
 !.gitkeep
+logs/*
